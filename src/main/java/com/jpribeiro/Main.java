@@ -32,5 +32,9 @@ public class Main {
             double b = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("b")));
             ctx.result(String.valueOf(service.divide(a, b)));
         });
+
+        app.get("/health", ctx -> ctx.result("OK"));
+
+        System.out.println("Servidor iniciado em http://localhost:8080");
     }
 }

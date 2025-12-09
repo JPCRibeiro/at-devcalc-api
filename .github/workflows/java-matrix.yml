@@ -1,0 +1,21 @@
+name: Java Matrix
+on:
+  push:
+jobs:
+  build-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ '11', '17' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configurar Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+      - name: Verificar Versão Ativa
+        run: java -version
+
+
