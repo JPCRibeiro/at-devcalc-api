@@ -1,17 +1,36 @@
 package com.jpribeiro;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import io.javalin.Javalin;
+
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.print("Hello and welcome!");
+        CalculatorService service = new CalculatorService();
+        Javalin app = Javalin.create().start(8080);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        app.get("/add", ctx -> {
+            double a = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("a")));
+            double b = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("b")));
+            ctx.result(String.valueOf(service.add(a, b)));
+        });
+
+        app.get("/subtract", ctx -> {
+            double a = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("a")));
+            double b = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("b")));
+            ctx.result(String.valueOf(service.subtract(a, b)));
+        });
+
+        app.get("/multiply", ctx -> {
+            double a = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("a")));
+            double b = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("b")));
+            ctx.result(String.valueOf(service.multiply(a, b)));
+        });
+
+        app.get("/divide", ctx -> {
+            double a = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("a")));
+            double b = Double.parseDouble(Objects.requireNonNull(ctx.queryParam("b")));
+            ctx.result(String.valueOf(service.divide(a, b)));
+        });
     }
 }
